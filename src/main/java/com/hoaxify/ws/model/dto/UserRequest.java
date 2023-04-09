@@ -1,6 +1,6 @@
 package com.hoaxify.ws.model.dto;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 
 public record UserRequest(
         @NotEmpty(message = "User name can not be null or empty.") String userName,
