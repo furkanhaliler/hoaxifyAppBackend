@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = UniqueUserNameValidator.class)
 public @interface UniqueUserName {
 
-    String message() default "This Username was taken by another user. Please try again.";
+    String message() default "{hoaxify.validation.constraints.UniqueUserName.message}";
 
     Class<?>[] groups() default {};
 
