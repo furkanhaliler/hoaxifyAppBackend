@@ -1,5 +1,7 @@
 package com.hoaxify.ws.controller;
 
+import com.hoaxify.ws.core.results.Result;
+import com.hoaxify.ws.model.dto.UserDto;
 import com.hoaxify.ws.model.dto.UserRequest;
 import com.hoaxify.ws.service.UserService;
 import jakarta.validation.Valid;
@@ -21,8 +23,8 @@ public class UserController {
   }
 
   @PostMapping("/save")
-  public void save(@RequestBody @Valid UserRequest userRequest) {
+  public Result<UserDto> save(@RequestBody @Valid UserRequest userRequest) {
 
-    userService.save(userRequest);
+    return userService.save(userRequest);
   }
 }
