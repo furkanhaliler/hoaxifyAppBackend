@@ -1,7 +1,6 @@
 package com.hoaxify.ws.constraint;
 
 import com.hoaxify.ws.dao.UserRepository;
-import com.hoaxify.ws.model.entity.User;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ public class UniqueUserNameValidator implements ConstraintValidator<UniqueUserNa
 
   @Override
   public boolean isValid(
-      final String userName, final ConstraintValidatorContext constraintValidatorContext) {
-    return !userRepository.existsByUserName(userName);
+      final String username, final ConstraintValidatorContext constraintValidatorContext) {
+    return !userRepository.existsByUsername(username);
   }
 }

@@ -30,11 +30,11 @@ public class UserServiceImpl implements UserService {
 
     User user =
         new User()
-            .userName(userRequest.userName())
+            .username(userRequest.username())
             .displayName(userRequest.displayName())
             .password(passwordEncoder.encode(userRequest.password()));
     userRepository.save(user);
 
-    return new SuccessResult<>(HttpStatus.CREATED, "User created.", new UserDto(user.userName(), user.displayName()));
+    return new SuccessResult<>(HttpStatus.CREATED, "User created.", new UserDto(user.username(), user.displayName()));
   }
 }

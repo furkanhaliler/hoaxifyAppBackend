@@ -22,7 +22,7 @@ public class User implements UserDetails {
   private UUID id;
 
   @Setter
-  private String userName;
+  private String username;
 
   @Setter
   private String displayName;
@@ -42,7 +42,7 @@ public class User implements UserDetails {
 
   @Override
   public String getUsername() {
-    return this.userName;
+    return this.username;
   }
 
   @Override

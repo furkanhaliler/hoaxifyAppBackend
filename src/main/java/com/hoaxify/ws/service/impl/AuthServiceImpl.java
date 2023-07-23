@@ -14,6 +14,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public Result<?> handleAuthentication(User user) {
-        return new SuccessResult<>(HttpStatus.OK, "Successful authorization.", new UserDto(user.userName(), user.displayName()));
+        return new SuccessResult<>(HttpStatus.OK, "Successful authorization.", new UserDto(user.username(), user.displayName()));
     }
 }

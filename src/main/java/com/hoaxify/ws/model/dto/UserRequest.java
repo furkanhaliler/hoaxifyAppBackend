@@ -9,7 +9,7 @@ public record UserRequest(
         @NotEmpty(message = "{hoaxify.validation.constraints.NotEmpty.message}")
         @Size(min = 3, max = 50, message = "{hoaxify.validation.constraints.Size.message}")
         @UniqueUserName
-        String userName,
+        String username,
         @NotEmpty(message = "{hoaxify.validation.constraints.NotEmpty.message}")
         @Size(min = 3, max = 50, message = "{hoaxify.validation.constraints.Size.message}")
         String displayName,
