@@ -12,11 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
-
   private final PasswordEncoder passwordEncoder;
 
   @Autowired
@@ -35,6 +36,15 @@ public class UserServiceImpl implements UserService {
             .password(passwordEncoder.encode(userRequest.password()));
     userRepository.save(user);
 
-    return new SuccessResult<>(HttpStatus.CREATED, "User created.", new UserDto(user.username(), user.displayName()));
+    return new SuccessResult<>(HttpStatus.CREATED, "User created.",
+            new UserDto(user.username(), user.displayName(), null));
+  }
+
+  @Override
+  public Result<List<UserDto>> getAll() {
+    List<User> users = userRepository.findAll();
+    List<UserDto> userDtoList = users.stream().map(user -> new UserDto(user.username(),
+            user.displayName(), null)).toList();
+    return new SuccessResult<>(HttpStatus.OK, "Users fetched.", userDtoList);
   }
 }

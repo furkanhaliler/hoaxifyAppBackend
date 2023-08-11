@@ -30,6 +30,9 @@ public class User implements UserDetails {
   @Setter
   private String password;
 
+  @Setter
+  private String image;
+
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return AuthorityUtils.createAuthorityList("Role_user");
