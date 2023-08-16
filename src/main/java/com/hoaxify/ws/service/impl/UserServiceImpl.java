@@ -5,26 +5,23 @@ import com.hoaxify.ws.core.results.SuccessResult;
 import com.hoaxify.ws.dao.UserRepository;
 import com.hoaxify.ws.model.dto.UserDto;
 import com.hoaxify.ws.model.dto.UserRequest;
+import com.hoaxify.ws.model.dto.UserWithPageDto;
 import com.hoaxify.ws.model.entity.User;
 import com.hoaxify.ws.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
-
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
-
-  @Autowired
-  public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-    this.userRepository = userRepository;
-    this.passwordEncoder = passwordEncoder;
-  }
 
   @Override
   public Result<UserDto> save(UserRequest userRequest) {
@@ -46,5 +43,13 @@ public class UserServiceImpl implements UserService {
     List<UserDto> userDtoList = users.stream().map(user -> new UserDto(user.username(),
             user.displayName(), null)).toList();
     return new SuccessResult<>(HttpStatus.OK, "Users fetched.", userDtoList);
+  }
+
+  @Override
+  public Result<UserWithPageDto> getAllPaged(Pageable page) {
+    Page<User> users = userRepository.findAll(page);
+    List<UserDto> userDtoList = users.getContent().stream().map(user -> new UserDto(user.username(), user.displayName(), user.image())).toList();
+    UserWithPageDto userWithPageDto = new UserWithPageDto(userDtoList, users.getTotalElements(), users.getTotalPages());
+    return new SuccessResult<>(HttpStatus.OK, userDtoList.size() + " user fetched on page " + users.getNumber(), userWithPageDto);
   }
 }

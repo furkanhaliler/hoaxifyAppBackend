@@ -3,23 +3,21 @@ package com.hoaxify.ws.controller;
 import com.hoaxify.ws.core.results.Result;
 import com.hoaxify.ws.model.dto.UserDto;
 import com.hoaxify.ws.model.dto.UserRequest;
+import com.hoaxify.ws.model.dto.UserWithPageDto;
 import com.hoaxify.ws.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
-  private UserService userService;
-
-  @Autowired
-  public UserController(UserService userService) {
-    this.userService = userService;
-  }
+  private final UserService userService;
 
   @PostMapping("/save")
   public Result<UserDto> save(@RequestBody @Valid UserRequest userRequest) {
@@ -30,5 +28,10 @@ public class UserController {
   @GetMapping("/getAll")
   public Result<List<UserDto>> getUsers(){
     return userService.getAll();
+  }
+
+  @GetMapping("/getAllPaged")
+  public Result<UserWithPageDto> getUsersPaged(Pageable page){
+    return userService.getAllPaged(page);
   }
 }
